@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    static final String TAG = "MainActivityTag";
     List<Book> books; // data source for our recyclerview
 
     @Override
@@ -63,16 +65,33 @@ public class MainActivity extends AppCompatActivity {
 
     class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
-        class CustomViewHolder extends RecyclerView.ViewHolder {
+        class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
             TextView text1;
             public CustomViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 text1 = itemView.findViewById(android.R.id.text1);
+
+                // wire 'em up
+                itemView.setOnClickListener(this);
+                itemView.setOnLongClickListener(this);
             }
 
             public void updateView(Book b) {
                 text1.setText(b.toString());
+            }
+
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+            }
+
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d(TAG, "onLongClick: ");
+
+
+                return true; // false means this event handler did not handle or "consume" the event
             }
         }
 
