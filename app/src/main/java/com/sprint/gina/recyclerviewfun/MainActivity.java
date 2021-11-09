@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void updateView(Book b) {
 //                text1.setText(b.toString());
+                myCardView1.setCardBackgroundColor(getResources().getColor(R.color.white));
                 myText1.setText(b.toString());
                 myImage1.setImageResource(R.drawable.placeholderimage);
             }
@@ -127,10 +128,12 @@ public class MainActivity extends AppCompatActivity {
                     if (selectedItems.contains(b)) {
                         // item is already selected, deselect it
                         selectedItems.remove(b);
+                        myCardView1.setCardBackgroundColor(getResources().getColor(R.color.white));
                     }
                     else {
                         // item is not selected, select it
                         selectedItems.add(b);
+                        myCardView1.setCardBackgroundColor(getResources().getColor(R.color.teal_200));
                     }
                     // update the title to show the number of selected items
                     actionMode.setTitle(selectedItems.size() + " item(s) selected");
@@ -203,6 +206,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onDestroyActionMode(ActionMode mode) {
                     // called when exiting CAM
                     multiSelect = false;
+                    // TODO: deselect selected items and notify the recyclerview
+                    // bad practice...but just getting this done for the demo
+                    selectedItems.clear();
+                    notifyDataSetChanged(); // force an update of all visible ViewHolders
+                    // reset the color to white
                 }
             };
         }
